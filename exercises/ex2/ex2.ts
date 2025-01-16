@@ -1,4 +1,4 @@
-/* link: https://typescript-exercises.github.io/#exercise=1&file=%2Findex.ts
+/* link: https://typescript-exercises.github.io/#exercise=2&file=%2Findex.ts
 Exercise:
 
     Type "Person" is missing, please define it and use
