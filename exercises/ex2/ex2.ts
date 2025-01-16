@@ -19,9 +19,9 @@ interface Admin {
     role: string;
 }
 
-export type Person = unknown;
+export type Person = User | Admin;
 
-export const persons: User[] /* <- Person[] */ = [
+export const persons: Person[] /* <- Person[] */ = [
     {
         name: 'Max Mustermann',
         age: 25,
@@ -44,8 +44,8 @@ export const persons: User[] /* <- Person[] */ = [
     }
 ];
 
-export function logPerson(user: User) {
-    console.log(` - ${user.name}, ${user.age}`);
+export function logPerson(person: Person) {
+    console.log(` - ${person.name}, ${person.age}`);
 }
 
 persons.forEach(logPerson);
