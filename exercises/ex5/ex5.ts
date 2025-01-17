@@ -76,10 +76,11 @@ export function logPerson(person: Person) {
     }
     console.log(` - ${person.name}, ${person.age}, ${additionalInformation}`);
 }
-
-export function filterUsers(persons: Person[], criteria: User): User[] {
+// it should have done with Partial<Omit<User, 'type'>>) 
+export function filterUsers(persons: Person[], criteria: {type?: 'user', name?: string, age?: number, occupation?: string}): User[] {
     return persons.filter(isUser).filter((user) => {
-        const criteriaKeys = Object.keys(criteria) as (keyof User)[];
+        let criteriaKeys = Object.keys(criteria) as (keyof User)[];
+        criteriaKeys = criteriaKeys.filter((fieldName) => fieldName !== 'type'); // remove type key from an array
         return criteriaKeys.every((fieldName) => {
             return user[fieldName] === criteria[fieldName];
         });
