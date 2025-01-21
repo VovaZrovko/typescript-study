@@ -57,12 +57,16 @@ export function filterPersons(persons: Person[], personType: Person["type"], cri
     return persons
         .filter((person) => person.type === personType)
         .filter((person) => {
-            let criteriaKeys = Object.keys(criteria) as (keyof Partial<Omit<Person, 'type'>>)[];
+            let criteriaKeys = getObjectKeys(criteria);
             
             return criteriaKeys.every((fieldName) => {
                 return person[fieldName] === criteria[fieldName];
             });
         });
+}
+
+function getObjectKeys<T extends object>(criteria: T): (keyof T)[] {
+    return Object.keys(criteria) as (keyof T)[];
 }
 
 export const usersOfAge23 = filterPersons(persons, 'user', { age: 23 });
