@@ -22,8 +22,22 @@ interface Admin {
     role: string;
 }
 
-type PowerUser = unknown;
+//this solution works as we omit the type and then we do intersaction. It's given from the site.
+//type PowerUser = Omit<User, 'type'> & Omit<Admin, 'type'> & { type: 'powerUser' };
 
+// this variant doesn't work as it says role and occupation has never type. 
+// It is because we use intersaction when there is type key with different types. Tested when there is no such field and everything was okay.
+/*type PowerUser = Omit<User & Admin, "type"> & {
+    type: 'powerUser';
+};*/
+
+type PowerUser = {
+    type: 'powerUser';
+    name: string;
+    age: number;
+    role: string;
+    occupation: string;
+}
 export type Person = User | Admin | PowerUser;
 
 export const persons: Person[] = [
