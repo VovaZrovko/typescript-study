@@ -74,6 +74,21 @@ export function promisify<T>(arg: (callback: (response: ApiResponse<T>) => void)
     };
 }
 
+// The problem is with generic as promisifyAll is invoked once but ApiResponse<T> could be 3 different types. 
+// Also promisify returns Promise<T> so it's the same problem. But the newApi should have be other type than oldApi
+// function promisifyAll<T>(oldApi: { [key: string]: (callback: (response: ApiResponse<T>) => void) => void }): { [key: string]: (callback: (response: ApiResponse<T>) => void) => void } {
+//     console.log('oldApi', (Object.keys(oldApi)));
+    
+//     let newApi: { [key: string]: (callback: (response: ApiResponse<T>) => void) => void };
+//     newApi = {... oldApi};
+//     console.log('newApi ', newApi);
+//     Object.keys(newApi).forEach((key) => {
+//         newApi[key] = promisify(newApi[key]);
+//     })
+//     console.log('newApi ', newApi);
+//     return newApi;
+// }
+
 const oldApi = {
     requestAdmins(callback: (response: ApiResponse<Admin[]>) => void) {
         callback({
@@ -115,7 +130,7 @@ function logPerson(person: Person) {
 }
 
 async function startTheApp() {
-    
+    //promisifyAll(oldApi);
     (await api.requestAdmins()).forEach(logPerson);
     console.log();
 
