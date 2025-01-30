@@ -25,12 +25,12 @@ Bonus:
  * @param {Array} input
  * @return {Array | Function}
  */
-export function map(mapper, input) {
+export function map<T>(mapper: (value: T, index?: number, array?: T[]) => T, input: T[]): Function | T[] {
     if (arguments.length === 0) {
         return map;
     }
     if (arguments.length === 1) {
-        return function subFunction(subInput) {
+        return function subFunction(subInput: T[]): Function | T[] {
             if (arguments.length === 0) {
                 return subFunction;
             }
@@ -235,12 +235,12 @@ export function prop(obj, propName) {
  * @param {Function[]} functions
  * @return {*}
  */
-export function pipe(...functions) {
+export function pipe<T>(...functions: Function[]): Function {
     if (arguments.length === 0) {
         return pipe;
     }
-    return function subFunction() {
-        let nextArguments = Array.from(arguments);
+    return function subFunction<U>(): U {
+        let nextArguments: U[] = Array.from(arguments);
         let result;
         for (const func of functions) {
             result = func(...nextArguments);
